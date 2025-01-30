@@ -52,7 +52,7 @@ tab persons
 tab politics
 
 
-/* judgment */
+/* normalize judgment */
 use "data_need_fulfilment_pilot_1", clear
 
 reshape long case, i(id) j(case_new)
@@ -72,7 +72,71 @@ foreach i of num 1/74 {
    drop judgment_max_`i'
 }
 
+
+/* reference values */
+gen reference_value = .
+   replace reference_value = 0.00 if case == 1
+   replace reference_value = 0.05 if case == 2
+   replace reference_value = 0.10 if case == 3
+   replace reference_value = 0.15 if case == 4
+   replace reference_value = 0.20 if case == 5
+   replace reference_value = 0.25 if case == 6
+   replace reference_value = 0.30 if case == 7
+   replace reference_value = 0.35 if case == 8
+   replace reference_value = 0.40 if case == 9
+   replace reference_value = 0.45 if case == 10
+   replace reference_value = 0.50 if case == 11
+   replace reference_value = 0.55 if case == 12
+   replace reference_value = 0.60 if case == 13
+   replace reference_value = 0.65 if case == 14
+   replace reference_value = 0.70 if case == 15
+   replace reference_value = 0.75 if case == 16
+   replace reference_value = 0.80 if case == 17
+   replace reference_value = 0.85 if case == 18
+   replace reference_value = 0.90 if case == 19
+   replace reference_value = 0.95 if case == 20
+   replace reference_value = 1.00 if case == 21
+
+
+/* mean judgment */
+preserve
+   collapse (mean) reference_value = reference_value (mean) mean_judgment_norm = judgment_norm (sd) sd_judgment_norm = judgment_norm (count) n = judgment_norm, by(case)
+
+   generate high = mean_judgment_norm + invttail(n - 1, 0.05) * (sd_judgment_norm / sqrt(n))
+   generate low = mean_judgment_norm - invttail(n - 1, 0.05) * (sd_judgment_norm / sqrt(n))
+
+   twoway (connected mean_judgment_norm case) ///
+          (connected reference_value case) ///
+          (rcap high low case, lcolor(black)), /// 
+          title("") ///
+          xtitle("Case") ///
+          ytitle("Normalized Judgment") ///
+          graphregion(color(white)) ///
+          legend(off) ///
+          saving(figure_pilot_1_1, replace)
+   graph export figure_pilot_1_1.pdf, replace
+restore
+
+by case, sort : ci means judgment_norm
+
+
+/* individual judgment */
 twoway (connected judgment_norm case, mcolor(black) lpattern(solid)), ///
        by(id, note("") graphregion(color(white))) ///
-       saving(figure_pilot_1, replace)
-   graph export figure_pilot_1.pdf, replace
+       title("") ///
+       xtitle("Case") ///
+       ytitle("Normalized Judgment") ///
+       graphregion(color(white)) ///
+       legend(off) ///
+       saving(figure_pilot_1_2, replace)
+   graph export figure_pilot_1_2.pdf, replace
+
+
+/* Wilcoxon matched-pairs signed-rank test */
+foreach i of num 1/21 {
+   preserve
+      keep if case == `i'
+
+      signrank judgment_norm = reference_value
+   restore
+}

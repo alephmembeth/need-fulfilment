@@ -14,14 +14,14 @@ label define gender_lb 1 "female" ///
    label values gender gender_lb
 
 label define education_lb 1 "No school-leaving certificate" ///
-                           2 "Certificate of secondary education" ///
-                           3 "General certificate of secondary education" ///
-                           4 "General higher education entrance qualification" ///
-                           5 "Completed vocational training" ///
-                           6 "Technician or master craftsman" ///
-                           7 "Bachelor (or comparable)" ///
-                           8 "Master (or comparable)" ///
-                           11 "Doctorate"
+                          2 "Certificate of secondary education" ///
+                          3 "General certificate of secondary education" ///
+                          4 "General higher education entrance qualification" ///
+                          5 "Completed vocational training" ///
+                          6 "Technician or master craftsman" ///
+                          7 "Bachelor (or comparable)" ///
+                          8 "Master (or comparable)" ///
+                         11 "Doctorate"
    label values education education_lb
 
 label define state_lb 1 "Baden-Württemberg" ///
@@ -33,13 +33,13 @@ label define state_lb 1 "Baden-Württemberg" ///
                       7 "Hesse" ///
                       8 "Mecklenburg-Vorpommern" ///
                       9 "Lower Saxony" ///
-                      10 "North Rhine-Westphalia" ///
-                      11 "Rhineland-Palatinate" ///
-                      12 "Saarland" ///
-                      13 "Saxony" ///
-                      14 "Saxony-Anhalt" ///
-                      15 "Schleswig-Holstein" ///
-                      16 "Thuringia"
+                     10 "North Rhine-Westphalia" ///
+                     11 "Rhineland-Palatinate" ///
+                     12 "Saarland" ///
+                     13 "Saxony" ///
+                     14 "Saxony-Anhalt" ///
+                     15 "Schleswig-Holstein" ///
+                     16 "Thuringia"
    label values state state_lb
 
 sum age, detail
@@ -114,7 +114,7 @@ preserve
           graphregion(color(white)) ///
           legend(off) ///
           saving(figure_pilot_1_1, replace)
-   graph export figure_pilot_1_1.pdf, replace
+      graph export figure_pilot_1_1.pdf, replace
 restore
 
 by case, sort : ci means judgment_norm

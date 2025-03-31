@@ -6,7 +6,7 @@ set scheme s2mono
 
 
 /* sample */
-use "data_need_fulfilment_pilot_2", clear
+use "data_need_fulfilment_pilot_3", clear
 
 label define gender_lb 1 "female" ///
                        2 "other" ///
@@ -53,7 +53,7 @@ tab politics
 
 
 /* normalize judgment */
-use "data_need_fulfilment_pilot_2", clear
+use "data_need_fulfilment_pilot_3", clear
 
 reshape long case, i(id) j(case_new)
 
@@ -62,7 +62,7 @@ rename case_new case
 
 gen judgment_norm = .
 
-foreach i of num 1/15 {
+foreach i of num 1/24 {
    egen judgment_min_`i' = min(judgment) if id == `i'
    egen judgment_max_`i' = max(judgment) if id == `i'
 
@@ -113,8 +113,8 @@ preserve
           ytitle("Normalized Judgment") ///
           graphregion(color(white)) ///
           legend(off) ///
-          saving(figure_pilot_2_1, replace)
-      graph export figure_pilot_2_1.pdf, replace
+          saving(figure_pilot_3_1, replace)
+      graph export figure_pilot_3_1.pdf, replace
 restore
 
 by case, sort : ci means judgment_norm
@@ -128,8 +128,8 @@ twoway (connected judgment_norm case, mcolor(black) lpattern(solid)), ///
        ytitle("Normalized Judgment") ///
        graphregion(color(white)) ///
        legend(off) ///
-       saving(figure_pilot_2_2, replace)
-   graph export figure_pilot_2_2.pdf, replace
+       saving(figure_pilot_3_2, replace)
+   graph export figure_pilot_3_2.pdf, replace
 
 
 /* Wilcoxon matched-pairs signed-rank test */

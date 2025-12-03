@@ -140,6 +140,7 @@ graph bar (percent), ///
       over(resp, label(angle(45))) ///
       over(dim) ///
       by(case, cols(3) title("Choices by Case and Condition")) ///
+      ylabel(, angle(0)) ///
       ytitle("Percent") ///
       legend(order(1 "Fulfillment" 2 "Justice")) ///
       saving(figure_pilot_4_1, replace)
@@ -147,6 +148,7 @@ graph bar (percent), ///
 
 graph bar (mean) diff_cons ratio_cons, over(dim) ///
       by(case, cols(3) title("Rule Consistency by Case and Condition")) ///
+      ylabel(, angle(0)) ///
       ytitle("Mean Consistency") ///
       legend(order(1 "Difference-Consistent" 2 "Ratio-Consistent")) ///
       saving(figure_pilot_4_2, replace)
@@ -199,6 +201,7 @@ preserve
    /* difference-consistent vs. ratio-consistent choices by condition */
    graph bar (mean) diff_cons ratio_cons, over(dim) ///
          legend(order(1 "Difference-Consistent" 2 "Ratio-Consistent")) ///
+         ylabel(, angle(0)) ///
          ytitle("Mean Number of Consistent Responses") ///
          title("Choice Consistency by Condition") ///
          saving(figure_pilot_4_3, replace)
@@ -210,6 +213,7 @@ preserve
          over(strategy, label(angle(45))) ///
          over(dim) ///
          stack ///
+         ylabel(, angle(0)) ///
          ytitle("Percent") ///
          title("Strategy Types by Condition") ///
          saving(figure_pilot_4_4, replace)
@@ -259,7 +263,10 @@ preserve
          over(family) ///
          over(case) ///
          by(dim, cols(2) ///
-         title("Normalized Judgments for Families A and B by Case and Condition")) ///
+         title("Normalized Judgments by Case and Condition") ///
+         note("")) ///
+         ylabel(, angle(0)) ///
+         ytitle("Mean") ///
          saving(figure_pilot_4_5, replace)
       graph export figure_pilot_4_5.pdf, replace
    

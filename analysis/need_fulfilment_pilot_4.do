@@ -202,7 +202,7 @@ preserve
          ytitle("Mean Number of Consistent Responses") ///
          title("Choice Consistency by Condition") ///
          saving(figure_pilot_4_3, replace)
-      graph export figure_pilot_4_2.pdf, replace
+      graph export figure_pilot_4_3.pdf, replace
    
    
    /* strategy types by condition */

@@ -136,10 +136,14 @@ label define resp_lb 1 "A = B" ///
                      3 "B better"
    label values resp resp_lb
 
-graph bar (percent), ///
+bysort case dim resp: gen count = _N
+bysort case dim: gen total_dim = _N
+gen pct_within = (count / total_dim) * 100
+
+graph bar (mean) pct_within, ///
       over(resp, label(angle(45))) ///
       over(dim) ///
-      by(case, cols(3) title("Choices by Case and Condition")) ///
+      by(case, cols(3) title("Choices by Case and Condition") note("")) ///
       ylabel(, angle(0)) ///
       ytitle("Percent") ///
       legend(order(1 "Fulfillment" 2 "Justice")) ///
@@ -147,7 +151,7 @@ graph bar (percent), ///
    graph export figure_pilot_4_1.pdf, replace
 
 graph bar (mean) diff_cons ratio_cons, over(dim) ///
-      by(case, cols(3) title("Rule Consistency by Case and Condition")) ///
+      by(case, cols(3) title("Rule Consistency by Case and Condition") note("")) ///
       ylabel(, angle(0)) ///
       ytitle("Mean Consistency") ///
       legend(order(1 "Difference-Consistent" 2 "Ratio-Consistent")) ///
@@ -204,6 +208,7 @@ preserve
          ylabel(, angle(0)) ///
          ytitle("Mean Number of Consistent Responses") ///
          title("Choice Consistency by Condition") ///
+         note("") ///
          saving(figure_pilot_4_3, replace)
       graph export figure_pilot_4_3.pdf, replace
    
@@ -216,6 +221,7 @@ preserve
          ylabel(, angle(0)) ///
          ytitle("Percent") ///
          title("Strategy Types by Condition") ///
+         note("") ///
          saving(figure_pilot_4_4, replace)
       graph export figure_pilot_4_4.pdf, replace
    

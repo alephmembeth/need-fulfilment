@@ -34,3 +34,7 @@
 # Beamer auxiliary files
 *.nav
 *.snm
+
+# Jupyter Notebook
+*.ipynb_checkpoints
+*/.ipynb_checkpoints/*
